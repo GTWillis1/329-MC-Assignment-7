@@ -13,6 +13,7 @@
         <!--Weather View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="WeatherViewController" customModule="Assignment_7" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -70,13 +71,19 @@
                                     <action selector="checkConditions" destination="BYZ-38-t0r" eventType="touchUpInside" id="FBd-95-q9E"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g5X-w7-BEV">
+                                <rect key="frame" x="164.5" y="617" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="g5X-w7-BEV" secondAttribute="bottom" constant="20" id="7pu-Ed-q9n"/>
                             <constraint firstItem="4dL-4K-XIX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="45" id="8Ca-z7-AJ9"/>
                             <constraint firstItem="Sft-Lg-EzW" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="40" id="AsD-3l-mxu"/>
                             <constraint firstItem="Sft-Lg-EzW" firstAttribute="leading" secondItem="4dL-4K-XIX" secondAttribute="trailing" constant="8" id="GU3-4p-kW0"/>
                             <constraint firstItem="eGs-MT-oFU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="GxE-Ka-o8M"/>
+                            <constraint firstItem="g5X-w7-BEV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="HHQ-93-u45"/>
                             <constraint firstItem="NZG-0h-VZa" firstAttribute="top" secondItem="9lb-HB-lIO" secondAttribute="bottom" constant="8" id="J7d-Lj-aJ9"/>
                             <constraint firstItem="NZG-0h-VZa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="QQz-W3-itJ"/>
                             <constraint firstItem="9lb-HB-lIO" firstAttribute="top" secondItem="Sft-Lg-EzW" secondAttribute="bottom" constant="8" id="Ypp-e3-i0M"/>
@@ -92,11 +99,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="cityTextField" destination="9lb-HB-lIO" id="Opo-Jc-PZn"/>
-                        <outlet property="stateTextField" destination="9lb-HB-lIO" id="vu4-Ii-OpD"/>
+                        <outlet property="bottomButton" destination="g5X-w7-BEV" id="DHZ-82-DIj"/>
+                        <outlet property="cityTextField" destination="Sft-Lg-EzW" id="IjM-in-5Mq"/>
+                        <outlet property="stateTextField" destination="9lb-HB-lIO" id="WvB-9J-pnz"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="53.600000000000001" y="26.53673163418291"/>
         </scene>
