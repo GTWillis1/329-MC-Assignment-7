@@ -13,6 +13,8 @@ import Foundation
 class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherDataProtocol {
 
     // MARK: Outlets
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     // Location entry and submission elements
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var stateTextField: UITextField!
@@ -48,6 +50,9 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherDataP
         self.dataSession.delegate = self
         self.bottomButton.setTitle("", for: .normal)
         self.bottomButton.isEnabled = false
+        let viewWidth = UIScreen.main.bounds.width - 200
+        let viewHeight = UIScreen.main.bounds.height + 200
+        self.scrollView.contentSize = CGSize(width: CGFloat(viewWidth), height: CGFloat(viewHeight))
         
         // Hide weather display at start
         self.iconImage.isHidden = true
@@ -69,7 +74,17 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherDataP
             label.isHidden = true
         }
     }
-    
+    /*
+    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+        super.willRotate(to: toInterfaceOrientation, duration: duration)
+        if toInterfaceOrientation == UIInterfaceOrientationPortrait {
+            
+        }
+        let viewWidth = UIScreen.main.bounds.width - 200
+        let viewHeight = UIScreen.main.bounds.height + 200
+        self.scrollView.contentSize = CGSize(width: CGFloat(viewWidth), height: CGFloat(viewHeight))
+    }
+    */
     
     // MARK: URL formatting, data submission, and data label 
     @IBAction func checkConditions() {
@@ -147,7 +162,7 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherDataP
             self.humidityLabel.text = humid + "%"
             self.pressureLabel.text = pressure + "mbar"
             self.precipLabel.text = precip + "mm"
-            self.windLabel.text = windSpdKph + "kmph/" + windSpdMph + "mph " + windDirComp + " 78746(" + windDirDeg + "°)"
+            self.windLabel.text = windSpdKph + "kmph/" + windSpdMph + "mph " + windDirComp + " (" + windDirDeg + "°)"
             
             let session = URLSession(configuration: .default)
             let downloadIconTask = session.dataTask(with: iconURL!) { (data, response, error) in
@@ -190,6 +205,7 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherDataP
             // Set hourly forecast button fields
             self.bottomButton.setTitle("Current conditions not found", for: .normal)
             self.bottomButton.isEnabled = false
+            self.bottomButton.setTitleColor(UIColor.black, for: .normal)
         }
         
     }

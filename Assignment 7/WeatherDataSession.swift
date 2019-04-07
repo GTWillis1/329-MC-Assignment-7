@@ -36,13 +36,16 @@ class WeatherDataSession {
                 print(error!)
             } else {
                 do {
+                    if response != nil {
+                        print("Received response: \(response!)")
+                    }
                     let jsonResult = try JSONSerialization.jsonObject(with:data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary
                     if jsonResult != nil {
                         let resultData = jsonResult!["data"] as? NSDictionary
                         let weatherCond = resultData!["current_condition"] as? NSArray
                         if weatherCond != nil {
                             let currentCond = weatherCond![0] as? NSDictionary
-                            print("Current conditions:\n\(currentCond!)")
+                            //print("Current conditions:\n\(currentCond!)")
                             self.delegate?.responseDataHandler(data: currentCond!)
                         } else {
                             self.delegate?.responseError(message: "Current conditions not found")
