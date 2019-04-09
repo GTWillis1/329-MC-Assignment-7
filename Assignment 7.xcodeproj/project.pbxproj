@@ -8,19 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		F1B51A482257D1D40026E78F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B51A472257D1D40026E78F /* AppDelegate.swift */; };
-		F1B51A4A2257D1D40026E78F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B51A492257D1D40026E78F /* ViewController.swift */; };
 		F1B51A4D2257D1D40026E78F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1B51A4B2257D1D40026E78F /* Main.storyboard */; };
 		F1B51A502257D1D40026E78F /* Assignment_7.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F1B51A4E2257D1D40026E78F /* Assignment_7.xcdatamodeld */; };
 		F1B51A522257D1D60026E78F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1B51A512257D1D60026E78F /* Assets.xcassets */; };
 		F1B51A552257D1D60026E78F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1B51A532257D1D60026E78F /* LaunchScreen.storyboard */; };
 		F1B51A5D2257D2E30026E78F /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B51A5C2257D2E30026E78F /* WeatherViewController.swift */; };
 		F1B51A5F225924F50026E78F /* WeatherDataSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B51A5E225924F50026E78F /* WeatherDataSession.swift */; };
+		F1B51A61225BB11F0026E78F /* HourlyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B51A60225BB11F0026E78F /* HourlyTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F1B51A442257D1D40026E78F /* Assignment 7.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Assignment 7.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1B51A472257D1D40026E78F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F1B51A492257D1D40026E78F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F1B51A4C2257D1D40026E78F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F1B51A4F2257D1D40026E78F /* Assignment_7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Assignment_7.xcdatamodel; sourceTree = "<group>"; };
 		F1B51A512257D1D60026E78F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -28,6 +27,7 @@
 		F1B51A562257D1D60026E78F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1B51A5C2257D2E30026E78F /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		F1B51A5E225924F50026E78F /* WeatherDataSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataSession.swift; sourceTree = "<group>"; };
+		F1B51A60225BB11F0026E78F /* HourlyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,8 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				F1B51A472257D1D40026E78F /* AppDelegate.swift */,
-				F1B51A492257D1D40026E78F /* ViewController.swift */,
 				F1B51A4B2257D1D40026E78F /* Main.storyboard */,
+				F1B51A60225BB11F0026E78F /* HourlyTableViewController.swift */,
 				F1B51A5E225924F50026E78F /* WeatherDataSession.swift */,
 				F1B51A5C2257D2E30026E78F /* WeatherViewController.swift */,
 				F1B51A512257D1D60026E78F /* Assets.xcassets */,
@@ -144,11 +144,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F1B51A4A2257D1D40026E78F /* ViewController.swift in Sources */,
 				F1B51A5D2257D2E30026E78F /* WeatherViewController.swift in Sources */,
 				F1B51A502257D1D40026E78F /* Assignment_7.xcdatamodeld in Sources */,
 				F1B51A5F225924F50026E78F /* WeatherDataSession.swift in Sources */,
 				F1B51A482257D1D40026E78F /* AppDelegate.swift in Sources */,
+				F1B51A61225BB11F0026E78F /* HourlyTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

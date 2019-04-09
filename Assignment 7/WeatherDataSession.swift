@@ -9,7 +9,7 @@
 import UIKit
 
 protocol WeatherDataProtocol {
-    func responseDataHandler(data:NSDictionary)
+    func responseDataHandler(currentData:NSDictionary, hourlyData:NSArray)
     func responseError(message:String)
 }
 
@@ -42,11 +42,16 @@ class WeatherDataSession {
                     let jsonResult = try JSONSerialization.jsonObject(with:data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary
                     if jsonResult != nil {
                         let resultData = jsonResult!["data"] as? NSDictionary
+                        let requestArr = resultData!["request"] as? NSArray
                         let weatherCond = resultData!["current_condition"] as? NSArray
-                        if weatherCond != nil {
+                        let daily = resultData!["weather"] as? NSArray
+                        if weatherCond != nil && daily != nil && requestArr != nil {
+                            let requestData = requestArr![0] as? NSDictionary
+                            print("Request received\nRequest type: \(requestData!["type"]!)\nQuery: \(requestData!["query"]!)")
+                            let today = daily![0] as? NSDictionary
+                            let hourly = today!["hourly"] as? NSArray
                             let currentCond = weatherCond![0] as? NSDictionary
-                            //print("Current conditions:\n\(currentCond!)")
-                            self.delegate?.responseDataHandler(data: currentCond!)
+                            self.delegate?.responseDataHandler(currentData: currentCond!, hourlyData: hourly!)
                         } else {
                             self.delegate?.responseError(message: "Current conditions not found")
                         }

@@ -40,10 +40,13 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherDataP
     private var dataSession = WeatherDataSession()
     private var weatherNameLabels = [UILabel]()
     private var weatherDataLabels = [UILabel]()
+    var hourData = [NSDictionary]()
     
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Current Conditions"
+        
         // Do any additional setup after loading the view
         self.cityTextField.delegate = self
         self.stateTextField.delegate = self
@@ -74,6 +77,25 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherDataP
             label.isHidden = true
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showHourly" {
+            let hourlyVC = segue.destination as! HourlyTableViewController
+            hourlyVC.hourlyData = self.hourData
+        }
+    }
+    
+    @IBAction func showHourlyWeather(_ sender: Any) {
+    
+        self.performSegue(withIdentifier: "showHourly", sender: sender)
+    }
+    
+    // MARK: UITextFieldDelegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
     /*
     override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         super.willRotate(to: toInterfaceOrientation, duration: duration)
@@ -88,7 +110,10 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherDataP
     
     // MARK: URL formatting, data submission, and data label 
     @IBAction func checkConditions() {
-
+        
+        self.cityTextField.resignFirstResponder()
+        self.stateTextField.resignFirstResponder()
+        
         // Process text field text as necessary and format query dependent on type of entry
         // City + State -> ?q={city},{state}
         // Zipcode -> ?q={zipcode}
@@ -101,10 +126,6 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherDataP
         else {
             new_url = "\(new_city),\(new_state)"
         }
-        
-        // Clear text entry fields upon submission
-        cityTextField.text! = ""
-        stateTextField.text! = ""
     
         // Get data from url submission
         self.dataSession.getData(weatherDataLoc: new_url)
@@ -117,7 +138,7 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherDataP
         var zip_bool = false
         var new_text: String = text.trimmingCharacters(in: .whitespacesAndNewlines)
         new_text = new_text.replacingOccurrences(of: " ", with: "+")
-        zip_bool = CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: new_text))
+        zip_bool = (CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: new_text))) && (text.count == 5)
         
         print("Formatted text: \(new_text)\nZip bool: \(zip_bool)")
         
@@ -127,23 +148,46 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherDataP
     
     
     // MARK: Weather Data Protocol
-    func responseDataHandler(data:NSDictionary) {
-        // Retrieve weather data
-        let tempF = data["temp_F"] as! String
-        let tempC = data["temp_C"] as! String
-        let cloudCover = data["cloudcover"] as! String
-        let humid = data["humidity"] as! String
-        let pressure = data["pressure"] as! String
-        let precip = data["precipMM"] as! String
-        let windSpdKph = data["windspeedKmph"] as! String
-        let windSpdMph = data["windspeedMiles"] as! String
-        let windDirDeg = data["winddirDegree"] as! String
-        let windDirComp = data["winddir16Point"] as! String
+    func responseDataHandler(currentData:NSDictionary, hourlyData:NSArray) {
+        // Retrieve current weather data
+        let tempF = currentData["temp_F"] as! String
+        let tempC = currentData["temp_C"] as! String
+        let cloudCover = currentData["cloudcover"] as! String
+        let humid = currentData["humidity"] as! String
+        let pressure = currentData["pressure"] as! String
+        let precip = currentData["precipMM"] as! String
+        let windSpdKph = currentData["windspeedKmph"] as! String
+        let windSpdMph = currentData["windspeedMiles"] as! String
+        let windDirDeg = currentData["winddirDegree"] as! String
+        let windDirComp = currentData["winddir16Point"] as! String
         
-        // Download weather icon and store in image view
-        let iconArray = data["weatherIconUrl"] as? NSArray
+        // Download current weather icon and store in image view
+        let iconArray = currentData["weatherIconUrl"] as? NSArray
         let iconDict = iconArray![0] as? NSDictionary
         let iconURL = URL(string: iconDict!["value"] as! String)
+        let session = URLSession(configuration: .default)
+        let downloadIconTask = session.dataTask(with: iconURL!) { (data, response, error) in
+            if error != nil {
+                print("Error downloading weather icon: \(error!)")
+            } else {
+                if response != nil {
+                    if let imageData = data {
+                        let iconImg = UIImage(data: imageData)
+                        DispatchQueue.main.async {
+                            self.iconImage.image = iconImg!
+                        }
+                    } else {
+                        print("Couldn't get icon image; image is nil")
+                    }
+                } else {
+                    print("Couldn't get response code somehow")
+                }
+            }
+        }
+        downloadIconTask.resume()
+        
+        // Store hourly data for processing to be performed when loading hourly forecast view
+        self.hourData = hourlyData as! [NSDictionary]
         
         // Run this handling on a separate thread
         DispatchQueue.main.async {
@@ -163,25 +207,6 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherDataP
             self.pressureLabel.text = pressure + "mbar"
             self.precipLabel.text = precip + "mm"
             self.windLabel.text = windSpdKph + "kmph/" + windSpdMph + "mph " + windDirComp + " (" + windDirDeg + "°)"
-            
-            let session = URLSession(configuration: .default)
-            let downloadIconTask = session.dataTask(with: iconURL!) { (data, response, error) in
-                if error != nil {
-                    print("Error downloading weather icon: \(error!)")
-                } else {
-                    if response != nil {
-                        if let imageData = data {
-                            let iconImg = UIImage(data: imageData)
-                            self.iconImage.image = iconImg!
-                        } else {
-                            print("Couldn't get icon image; image is nil")
-                        }
-                    } else {
-                        print("Couldn't get response code somehow")
-                    }
-                }
-            }
-            downloadIconTask.resume()
             
             // Set hourly forecast button fields
             self.bottomButton.setTitle("Hourly Forecast", for: .normal)
